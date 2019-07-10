@@ -6,7 +6,7 @@ use App\Document\Embedded\Location;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
- * @ODM\Document(collection="shops")
+ * @ODM\Document(collection="shops", repositoryClass="App\Repository\ShopRepository")
  */
 class Shop 
 {
