@@ -3,8 +3,10 @@
 namespace App\Document;
 
 use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -20,7 +22,7 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @Type("string")
+     * @Serializer\Type("string")
      *
      * @ODM\Field(type="string")
      * @Assert\NotBlank(message = "Email address is required")
@@ -29,7 +31,7 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @Type("string")
+     * @Serializer\Type("string")
      *
      * @ODM\Field(type="string")
      * @Assert\NotBlank(message="Password is required")
@@ -45,6 +47,16 @@ class User implements UserInterface
      */
     private $roles = [];
 
+    /**
+     * @Serializer\Exclude()
+     * @ODM\ReferenceMany(targetDocument="Shop")
+     */
+    private $preferredShops ;
+
+    public function __construct()
+    {
+        $this->preferredShops  = new ArrayCollection();
+    }
 
     public function getId(): string
     {
@@ -73,6 +85,28 @@ class User implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
+        return $this;
+    }
+
+    /**
+    * @return Collection|Shop[]
+    */
+    public function getPreferredShops(): Collection
+    {
+        return $this->preferredShops;
+    }
+    public function addShop(Shop $shop): self
+    {
+        if (!$this->preferredShops->contains($shop)) {
+            $this->preferredShops[] = $shop;
+        }
+        return $this;
+    }
+    public function removeShop(Shop $shop): self
+    {
+        if ($this->preferredShops->contains($shop)) {
+            $this->preferredShops->removeElement($shop);
+        }
         return $this;
     }
 
