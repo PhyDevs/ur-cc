@@ -1,0 +1,45 @@
+@import 'normalize';
+@import 'variables/typography';
+@import 'variables/colors';
+
+@import 'components/Loader.scss';
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: $font__main;
+	font-size: $font__size-body;
+	font-weight: $font__weight-body;
+	line-height: $font__line-height-body;
+	letter-spacing: $font__letter-spacing-body;
+	background-color: $color__background-body;
+	color: $color__body;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: $font__weight-headings;
+	line-height: $font__line-height-headings;
+	color: $color__headings;
+}
+
+p {
+	font-size: 16px;
+	line-height: 26px;
+}
+
+b, strong {
+	font-weight: 600;
+}
+
+dfn, cite, em, i {
+  	font-style: italic;
+}
