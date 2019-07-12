@@ -42,7 +42,15 @@ const useAuth = () => {
 		[setIsAuthenticated]
 	);
 
-	return [isAuthenticated, authenticate];
+	const logout = React.useCallback(() => {
+		try {
+			localStorage.removeItem('token');
+		} finally {
+			setIsAuthenticated(false);
+		}
+	}, [setIsAuthenticated]);
+
+	return [isAuthenticated, authenticate, logout];
 };
 
 AuthProvider.propTypes = {
