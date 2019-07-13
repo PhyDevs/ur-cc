@@ -1,0 +1,49 @@
+.cards-con__row {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.single-card {
+    position: relative;
+    margin: 0 10px 30px;
+    padding: 15px 20px;
+    flex-basis: calc(50% - 20px);
+    align-self: flex-start;
+    background-color: #fff;
+    overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px -2px rgba(62, 62, 62, 0.36);
+
+    h2 {
+        margin: 5px 0 10px;
+        font-size: 20px;
+        font-weight: 700;
+        text-indent: 4px;
+    }
+
+    .shop-img--con {
+        display: block;
+        position: relative;
+        margin-bottom: 10px;
+        overflow: hidden;
+
+        img {
+            max-width: 100%;
+            width: 100%;
+            border-radius: 3px;
+        }
+    }
+
+    .nearby-btns button.btn {
+        display: inline-block;
+        margin: 10px 5px;
+        width: calc(50% - 10px);
+    }
+}
+
+@media screen and (min-width:820px) {
+    .single-card {
+        flex-basis: calc(25% - 20px);
+    }
+}
