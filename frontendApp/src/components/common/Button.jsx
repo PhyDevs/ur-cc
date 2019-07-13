@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 require('../../styles/components/common/Button.scss');
 
-const Button = ({ children, type, loading, color }) => (
-	<button type={type} className={`btn btn-${color} ${loading && 'btn-loading'}`}>
+const Button = React.memo(({ children, type, loading, color, ...rest }) => (
+	<button type={type} className={`btn btn-${color} ${loading && 'btn-loading'}`} {...rest}>
 		{children}
 	</button>
-);
+));
 
 Button.propTypes = {
 	children: PropTypes.string.isRequired,
