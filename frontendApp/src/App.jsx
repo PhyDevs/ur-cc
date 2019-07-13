@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAuth } from './contexts/AuthContext';
 
+const AuthenticatedApp = React.lazy(() => import('./authenticated-app'));
 const UnauthenticatedApp = React.lazy(() => import('./unauthenticated-app'));
 
 const App = () => {
@@ -8,7 +9,7 @@ const App = () => {
 
 	return (
 		<React.Suspense fallback={<div className="loader" />}>
-			{isAuthenticated ? <h1>Welcome</h1> : <UnauthenticatedApp />}
+			{isAuthenticated ? <AuthenticatedApp /> : <UnauthenticatedApp />}
 		</React.Suspense>
 	);
 };
