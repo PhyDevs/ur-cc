@@ -35,29 +35,38 @@ const useFetch = route => {
 		data: null,
 	});
 
-	const get = React.useCallback(async () => {
-		let response = { data: null };
-		try {
-			const token = getToken();
-			const headers = {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${token}`,
-			};
-
-			dispatch({ type: types.SUBMIT_STARTED });
-			response = await axios.get(`${API_PATH}/${route}`, { headers });
-			dispatch({ type: types.SUBMIT_DONE, payload: { data: response.data } });
-		} catch (err) {
-			dispatch({ type: types.SUBMIT_DONE, payload: { data: null } });
-			if (!err.response || err.response.status === 401) {
-				logout();
-			}
-		}
-	}, [logout, route]);
-
 	React.useEffect(() => {
-		get();
-	}, [get, route]);
+		let mounted = true;
+		const source = axios.CancelToken.source();
+
+		(async () => {
+			let response = { data: null };
+			try {
+				const token = getToken();
+				const headers = {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${token}`,
+				};
+
+				dispatch({ type: types.SUBMIT_STARTED });
+				response = await axios.get(`${API_PATH}/${route}`, { headers, cancelToken: source.token });
+
+				if (mounted) dispatch({ type: types.SUBMIT_DONE, payload: { data: response.data } });
+			} catch (err) {
+				if (!axios.isCancel(err)) {
+					if (mounted) dispatch({ type: types.SUBMIT_DONE, payload: { data: null } });
+					if (!err.response || err.response.status === 401) {
+						logout();
+					}
+				}
+			}
+		})();
+
+		return () => {
+			mounted = false;
+			source.cancel('The Component was unmounted!');
+		};
+	}, [logout, route]);
 
 	return state;
 };
