@@ -1,4 +1,5 @@
 import React from 'react';
+import { navigate } from '@reach/router';
 import PropTypes from 'prop-types';
 
 const AuthContext = React.createContext();
@@ -35,6 +36,7 @@ const useAuth = () => {
 			try {
 				localStorage.setItem('token', token);
 				setIsAuthenticated(true);
+				navigate('/');
 			} catch {
 				setIsAuthenticated(false);
 			}
@@ -47,6 +49,7 @@ const useAuth = () => {
 			localStorage.removeItem('token');
 		} finally {
 			setIsAuthenticated(false);
+			navigate('/');
 		}
 	}, [setIsAuthenticated]);
 
