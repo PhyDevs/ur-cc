@@ -71,8 +71,6 @@ yarn install
 
 Before you start you have to configure your database, the database connection information is stored as an environment variable called `MONGODB_URL`. you can find and customize it inside .env file.
 
-* **Step 4 - Configuration**
-
 => Create the Database
 ```bash
 php bin/console doctrine:mongodb:schema:create
@@ -81,6 +79,8 @@ php bin/console doctrine:mongodb:schema:create
 => Load Dummy Data
 <br>
 You can download a mongoDB dump with 300 shops from [HERE][1]
+
+* **Step 4 - Configuration**
  
 => This app uses [LexikJWTAuthenticationBundle][2] to provide a JWT authentication, to configure it :
 
